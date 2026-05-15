@@ -1,14 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import {
-  FaStar,
-  FaCheck,
-  FaMapMarkerAlt,
-} from "react-icons/fa";
+import { FaStar, FaCheck, FaMapMarkerAlt } from "react-icons/fa";
 import { FiCalendar } from "react-icons/fi";
 import { IoArrowForward } from "react-icons/io5";
 
 import { getDestinationDetailsById } from "@/lib/data";
+import { EditModal } from "@/components/shared/EditModal";
+import { DeleteAlert } from "@/components/shared/DeleteAlert";
 
 const DestinationDetailsPage = async ({ params }) => {
   const { id } = await params;
@@ -30,13 +28,17 @@ const DestinationDetailsPage = async ({ params }) => {
     <div className="bg-[#f3f3f3] min-h-screen py-10">
       <div className="max-w-7xl mx-auto px-4 lg:px-6">
         {/* Back Button */}
-        <div className="mb-5">
+        <div className="mb-5 flex justify-between flex-wrap  gap-5">
           <Link
             href="/destinations"
             className="text-sm text-[#7a7a7a] hover:text-[#11b5d8] transition"
           >
             ← Back to Destinations
           </Link>
+          <div className="flex items-center gap-4">
+            <EditModal destinationData={destinationData} />
+            <DeleteAlert destinationData={destinationData}/>
+          </div>
         </div>
 
         {/* Main Container */}
@@ -72,13 +74,9 @@ const DestinationDetailsPage = async ({ params }) => {
                 <div className="flex items-center gap-2">
                   <FaStar className="text-green-500 text-sm" />
 
-                  <span className="font-semibold text-sm text-[#111]">
-                    4.9
-                  </span>
+                  <span className="font-semibold text-sm text-[#111]">4.9</span>
 
-                  <span className="text-[#7c7c7c] text-sm">
-                    (234 reviews)
-                  </span>
+                  <span className="text-[#7c7c7c] text-sm">(234 reviews)</span>
                 </div>
 
                 <div className="flex items-center gap-2 text-sm text-[#555]">
@@ -164,17 +162,13 @@ const DestinationDetailsPage = async ({ params }) => {
               <div className="border border-[#e6e6e6] rounded-sm p-6 sticky top-24 shadow-[0_2px_10px_rgba(0,0,0,0.04)] bg-white">
                 {/* Price */}
                 <div className="mb-7">
-                  <p className="text-[#7c7c7c] text-sm mb-1">
-                    Starting from
-                  </p>
+                  <p className="text-[#7c7c7c] text-sm mb-1">Starting from</p>
 
                   <h2 className="text-[#11b5d8] text-[44px] font-semibold leading-none">
                     ${price}
                   </h2>
 
-                  <p className="text-[#7c7c7c] text-sm mt-1">
-                    per person
-                  </p>
+                  <p className="text-[#7c7c7c] text-sm mt-1">per person</p>
                 </div>
 
                 {/* Date */}
@@ -198,9 +192,7 @@ const DestinationDetailsPage = async ({ params }) => {
                   <div className="flex items-center gap-3 text-sm text-[#666]">
                     <FaCheck className="text-green-500 text-[11px]" />
 
-                    <span>
-                      Free cancellation up to 7 days
-                    </span>
+                    <span>Free cancellation up to 7 days</span>
                   </div>
 
                   <div className="flex items-center gap-3 text-sm text-[#666]">
@@ -244,9 +236,7 @@ const DestinationDetailsPage = async ({ params }) => {
                 Trip Duration
               </h3>
 
-              <p className="text-[#666]">
-                {duration} Days Tour Package
-              </p>
+              <p className="text-[#666]">{duration} Days Tour Package</p>
             </div>
           </div>
         </div>
