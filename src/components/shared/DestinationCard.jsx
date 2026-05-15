@@ -3,23 +3,16 @@ import React from "react";
 import { FaLocationDot, FaStar } from "react-icons/fa6";
 import { MdOutlineDateRange } from "react-icons/md";
 import { FiArrowUpRight } from "react-icons/fi";
+import Link from "next/link";
 
 const DestinationCard = ({ destination }) => {
-  const {
-    destinationName,
-    country,
-    category,
-    price,
-    duration,
-    image,
-  } = destination;
+  const { destinationName, country, category, price, duration, image, _id } =
+    destination;
 
   return (
     <div className="group overflow-hidden bg-white transition-all duration-300 hover:-translate-y-1 cursor-pointer">
-      
       {/* Image Section */}
       <div className="relative h-[240px] overflow-hidden">
-        
         <Image
           src={image}
           alt={destinationName}
@@ -36,7 +29,6 @@ const DestinationCard = ({ destination }) => {
 
       {/* Content */}
       <div className="space-y-4 bg-[#f5f5f5] p-5">
-        
         {/* Country */}
         <div className="flex items-center gap-2 text-sm text-gray-500">
           <FaLocationDot className="text-[15px]" />
@@ -46,7 +38,7 @@ const DestinationCard = ({ destination }) => {
         {/* Title + Price */}
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h2 className="text-[34px] leading-none font-medium text-gray-900">
+            <h2 className="text-2xl leading-none font-medium text-gray-900">
               {destinationName}
             </h2>
 
@@ -74,10 +66,12 @@ const DestinationCard = ({ destination }) => {
         </div>
 
         {/* Button */}
-        <button className="group/btn flex items-center gap-2 border-b border-[#00B8D9] pb-1 text-lg font-medium uppercase tracking-wide text-[#00B8D9] transition-all duration-300 hover:gap-4">
-          Book Now
-          <FiArrowUpRight className="transition-transform duration-300 group-hover/btn:rotate-45" />
-        </button>
+        <Link href={`/destinations/${_id}`}>
+          <button className="group/btn flex items-center gap-2 border-b border-[#00B8D9] pb-1 text-lg font-medium uppercase tracking-wide text-[#00B8D9] transition-all duration-300 hover:gap-4 cursor-pointer">
+            Book Now
+            <FiArrowUpRight className="transition-transform duration-300 group-hover/btn:rotate-45" />
+          </button>
+        </Link>
       </div>
     </div>
   );
