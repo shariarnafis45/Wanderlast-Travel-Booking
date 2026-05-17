@@ -1,8 +1,15 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import {PersonFill} from '@gravity-ui/icons';
+import { authClient } from "@/lib/auth-client";
+import { PersonFill } from "@gravity-ui/icons";
+import { Avatar, Button } from "@heroui/react";
+import LogOut from "../auth/LogOut";
 
 const NavBar = () => {
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
   return (
     <div className="navbar ">
       <div className="navbar-start">
@@ -40,6 +47,9 @@ const NavBar = () => {
             <li>
               <Link href={"/admin"}>Admin</Link>
             </li>
+            <li>
+              <Link href={"/add-destination"}>Add Destination</Link>
+            </li>
           </ul>
         </div>
         <ul className="menu menu-horizontal px-1 hidden lg:flex">
@@ -54,6 +64,9 @@ const NavBar = () => {
           </li>
           <li>
             <Link href={"/admin"}>Admin</Link>
+          </li>
+          <li>
+            <Link href={"/add-destination"}>Add Destination</Link>
           </li>
         </ul>
         <Link href={"/"} className="lg:hidden flex">
@@ -76,16 +89,39 @@ const NavBar = () => {
         </Link>
       </div>
       <div className="navbar-end">
-        <ul className="menu menu-horizontal px-1">
+        <ul className="menu menu-horizontal px-1 gap-3">
           <li>
-            <Link href={"/my-profile"}> <PersonFill/> Profile</Link>
+            <Link href={"/my-profile"}>
+              {" "}
+              <PersonFill /> Profile
+            </Link>
           </li>
-          <li>
-            <Link href={"/signin"}>Login</Link>
-          </li>
-          <li>
-            <Link href={"/signup"}>SignUp</Link>
-          </li>
+          {user ? (
+            <>
+              <li>
+                <Avatar>
+                  <Avatar.Image
+                    alt="John Doe"
+                    src={user?.image}
+                    className="rounded-full"
+                  />
+                  <Avatar.Fallback>{user?.name[0]}</Avatar.Fallback>
+                </Avatar>
+              </li>
+              <li>
+                <LogOut/>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <Link href={"/login"}>Login</Link>
+              </li>
+              <li>
+                <Link href={"/signup"}>SignUp</Link>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </div>
